@@ -1,0 +1,58 @@
+.modal-background {
+  position: fixed; /* Stay in place */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* overflow: auto; Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+}
+
+.modal-container {
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 8px;
+  height: 25%;
+  width: 50%;
+  overflow: hidden;
+}
+
+.label-wrapper {
+  background: purple;
+  padding: 15px;
+}
+
+div.label-wrapper > h3 {
+  font-size: 30px;
+  font-weight: 900;
+  color: white;
+  margin: 0;
+}
+
+.modal-container > button {
+  width: 70px;
+  padding-right: 15px;
+  margin-right: 8px;
+}
+
+#modal-content {
+  align-self: flex-start;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#button-wrapper {
+    padding: 15px;
+    align-self: flex-end;
+
+}
+
