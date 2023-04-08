@@ -1,28 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import "./AddUser.css";
 
 const AddUser = ({ oldUsers }) => {
   const [users, setUsers] = useState([]);
-  const [userName, setUserName] = useState("");
-  const [userAge, setUserAge] = useState("");
   const [errorMessage, setErrorMessage] = useState();
   const [shouldShowErrorMessage, setShouldShowErrorMessage] = useState(false);
-  const userNameElement = document.querySelector("#username");
-  const userAgeElement = document.querySelector("#age");
   const modalElement = document.querySelector(".modal-container");
-
-  const onUserNameChangeHandler = (event) => {
-    setUserName(event.target.value);
-  };
-
-  const onUserAgeChangeHandler = (event) => {
-    if (event.target.value[0] === "0") {
-      event.target.value.slice(0);
-    } else {
-      setUserAge(event.target.value);
-    }
-  };
+  const userInputRef = useRef();
+  const ageInputRef = useRef();
 
   const addUserButtonHandler = () => {
     const isUserDataValid = evaluateUserDataValidation();
@@ -30,13 +16,13 @@ const AddUser = ({ oldUsers }) => {
       setUsers((prevUsers) => [
         ...prevUsers,
         {
-          username: userName,
-          age: userAge,
+          username: userInputRef.current.value,
+          age: ageInputRef.current.value,
           id: Math.floor(Math.random() * 10000),
         },
       ]);
-      setUserName("");
-      setUserAge("");
+      userInputRef.current.value = "";
+      ageInputRef.current.value = "";
     }
   };
 
@@ -45,6 +31,8 @@ const AddUser = ({ oldUsers }) => {
   };
 
   const evaluateUserDataValidation = () => {
+    const userName = userInputRef.current.value;
+    const userAge = ageInputRef.current.value;
     let isUserDataValid = true;
     if (!userName || !userAge) {
       setErrorMessage({
@@ -69,10 +57,6 @@ const AddUser = ({ oldUsers }) => {
     oldUsers(users);
   }, [users]);
 
-  useEffect(() => {
-    if (modalElement) setShouldShowErrorMessage(false);
-  }, [shouldShowErrorMessage]);
-
   return (
     <>
       <div className="section-wrapper">
@@ -81,20 +65,18 @@ const AddUser = ({ oldUsers }) => {
             <h3>Username</h3>
             <input
               type="text"
-              onChange={onUserNameChangeHandler}
               placeholder="Enter Username"
-              value={userName}
               id="username"
+              ref={userInputRef}
             />
           </div>
           <div className="input-item">
             <h3>Age (Years)</h3>
             <input
               type="number"
-              onChange={onUserAgeChangeHandler}
               placeholder="Enter Age"
-              value={userAge}
               id="age"
+              ref={ageInputRef}
             />
           </div>
           <button onClick={addUserButtonHandler}>Add User</button>
